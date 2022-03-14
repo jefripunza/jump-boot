@@ -131,6 +131,9 @@ NOTE : jika anda menggunakan Node Mailer, maka setup diatas adalah **WAJIB**. ji
 
 karena framework ini terinspirasi dari **Java Spring-Boot**, maka setup nya pun sama dengan framework tersebut. dengan alasan jika ingin migrasi tinggal copas saja settingan dari **Java Spring-Boot** kedalam project ini maka sudah otomatis terkonfigurasi.
 
+contoh isi file .properties seperti ini :
+![banner](jump-boot/img/PROPERTIES-EXAMPLE.JPG)
+
 ### run app
 
 untuk menjalankan project ini, seperti berikut :
