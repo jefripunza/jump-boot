@@ -445,7 +445,8 @@ kemudian didalam setiap **Endpoint** didalam file **Controller** menggunakan ano
 
 maka akan muncul seperti ini di endpoint "http://localhost:#port/#root/doc" (example) :
 ![banner](jump-boot/img/DOC-EXAMPLE.JPG)
-
+![banner](jump-boot/img/DOC-1.JPG)
+![banner](jump-boot/img/DOC-2.JPG)
 
 
 
