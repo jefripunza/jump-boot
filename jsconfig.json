@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "module": "commonjs",
+    "target": "es6",
+    "paths": {
+      "@root": ["./"],
+      "@jump-boot": ["jump-boot/*"],
+      "@controllers": ["controllers/*"],
+      "@middleware": ["middleware/*"],
+      "@entities": ["models/entities/*"],
+      "@repository": ["models/repository/*"],
+      "@services": ["services/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

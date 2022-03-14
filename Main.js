@@ -1,0 +1,65 @@
+/**
+ * Author      : Jefri Herdi Triyanto
+ * Description : program utama
+ */
+
+class Main {
+
+    clearTerminal = true;
+
+    server = {
+        debug: true,
+        database: true, // use database
+        doc: true, // like Swagger
+        public_directory: true,
+        maxUploadSize: 20, // MB
+        // security
+        cors: true,
+        helmet: true,
+        jwt: true,
+    }
+
+    chatServer = {
+        cache: true,
+        callback: (websocket) => {
+            websocket(io => {
+                // console.log({ io });
+            })
+        }
+    }
+
+    mailer = process.env.application === 'production' ?
+        {
+            host: 'smtp.ethereal.email',
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+                user: process.env.MAILER_EMAIL_PRODUCTION,
+                pass: process.env.MAILER_PASS_PRODUCTION,
+            },
+        } :
+        process.env.application === 'dev' ?
+            {
+                host: 'smtp.ethereal.email',
+                port: 587,
+                secure: false, // true for 465, false for other ports
+                auth: {
+                    user: process.env.MAILER_EMAIL_DEV,
+                    pass: process.env.MAILER_PASS_DEV,
+                },
+            } :
+            {
+                // local (default)
+                service: 'gmail',
+                auth: {
+                    user: process.env.MAILER_EMAIL_LOCAL,
+                    pass: process.env.MAILER_PASS_LOCAL,
+                },
+            };
+
+    whatsapp = {
+        name: '',
+    }
+}
+
+module.exports = Main;

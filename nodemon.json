@@ -1,0 +1,8 @@
+{
+    "ignore": [
+        "jump-boot/web/*",
+        "js-framework/*",
+        "*.json",
+        "x-sources/*"
+    ]
+}
