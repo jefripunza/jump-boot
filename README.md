@@ -94,6 +94,10 @@ npm install -g yarn pm2 nodemon
 
 ```bash
 git clone https://github.com/jefripunza/jump-boot my-project-name
+
+// or
+
+git clone https://github.com/jefripunza/jump-boot .
 ```
 
 ### Install Dependencies
