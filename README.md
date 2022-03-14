@@ -53,7 +53,7 @@
 
 ## Introduction
 
-Konsep dasar framework ini adalah mengacu kepada struktur dari **[Java Spring-Boot](https://spring.io/projects/spring-boot)** yang mana semua file project berbentuk OOP dan struktur nya **hampir mirip** dengan \***\*Java Spring-Boot\*\***. Saya sengaja membuat ini supaya teman2 yang dari Java Spring-Boot yang ingin **Hijrah** ke NodeJS maka menggunakan ini akan sangat familiar.
+Konsep dasar framework ini adalah mengacu kepada struktur dari **[Java Spring-Boot](https://spring.io/projects/spring-boot)** yang mana semua file project berbentuk OOP dan struktur nya **hampir mirip** dengan **Java Spring-Boot**. Saya sengaja membuat ini supaya teman2 yang dari Java Spring-Boot yang ingin **Hijrah** ke NodeJS maka menggunakan ini akan sangat familiar.
 
 ![RFP](jump-boot/RFP.jpg)
 
@@ -85,6 +85,7 @@ dikarenakan saya menggunakan **NodeJS**, maka yang harus dipersiapkan terlebih d
 ### Global Setup (hanya sekali saja dalam 1 perangkat)
 
 untuk menginisial kebutuhan dalam running dan developing
+
 ```bash
 npm install -g yarn pm2 nodemon
 ```
@@ -96,6 +97,7 @@ git clone https://github.com/jefripunza/jump-boot my-project-name
 ```
 
 ### Install Dependencies
+
 ```bash
 yarn install
 ```
@@ -133,9 +135,17 @@ NOTE : jika anda menggunakan Node Mailer, maka setup diatas adalah **WAJIB**. ji
 
 ## Remote Frontend Package (RFP)
 
-untuk mengaktifkan **RFP**, anda perlu menambahkan **jwt:true** di setup server didalam file **Main.js**
+untuk mengaktifkan **RFP**, anda perlu menambahkan di setup server didalam file **Main.js** :
+```javascript
+{
+    ...
+    rfp = true
+    ...
+}
+```
 
 kemudian copy file **[sendToBackend.js](https://github.com/jefripunza/jump-boot/blob/main/jump-boot/rfp/sendToBackend.js)** kemudian paste-kan **kedalam root project frontend anda** dengan nama **sendToBackend.js** dan **install dependency** yang diperlukan didalam project frontend dengan cara:
+
 #### frontend development side
 
 ```bash
@@ -176,68 +186,75 @@ rubah **package.json** pada bagian build menjadi :
 
 <br />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## How to USE
+## How to Development
 
 perhatikan dengan seksama cara menggunakan framework ini :
 
 ### setup server (Main.js)
-
 ```javascript
-...
-server = {
-    debug: true, // show endpoint if hit
-    database: true, // use database
-    doc: true, // like Swagger (#your_root#/doc)
-    public_directory: true,
-    maxUploadSize: 20, // MB
-    // security
-    cors: true,
-    helmet: true,
-    jwt: true,
+{
+    ...
+    server = {
+        debug: true, // show endpoint if hit
+        database: true, // use database
+        doc: true, // like Swagger (#your_root#/doc)
+        public_directory: true,
+        maxUploadSize: 20, // MB
+        // security
+        cors: true,
+        helmet: true,
+        jwt: true,
+    }
+    ...
 }
-...
 ```
 
+### setup mailer (Main.js)
+```javascript
+{
+    ...
+    mailer = process.env.application === 'production' ?
+        {
+            host: 'smtp.ethereal.email',
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+                user: process.env.MAILER_EMAIL_PRODUCTION,
+                pass: process.env.MAILER_PASS_PRODUCTION,
+            },
+        } :
+        process.env.application === 'dev' ?
+            {
+                host: 'smtp.ethereal.email',
+                port: 587,
+                secure: false, // true for 465, false for other ports
+                auth: {
+                    user: process.env.MAILER_EMAIL_DEV,
+                    pass: process.env.MAILER_PASS_DEV,
+                },
+            } :
+            {
+                // local (default)
+                service: 'gmail',
+                auth: {
+                    user: process.env.MAILER_EMAIL_LOCAL,
+                    pass: process.env.MAILER_PASS_LOCAL,
+                },
+            };
+    ...
+}
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### setup whatsapp (Main.js)
+```javascript
+{
+    ...
+    whatsapp = {
+        name: 'My Project Name',
+    }
+    ...
+}
+```
 
 <br />
 

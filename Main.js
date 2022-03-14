@@ -58,7 +58,7 @@ class Main {
             };
 
     whatsapp = {
-        name: '',
+        name: 'My Project Name',
     }
 }
 
