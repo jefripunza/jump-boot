@@ -82,54 +82,71 @@ dikarenakan saya menggunakan **NodeJS**, maka yang harus dipersiapkan terlebih d
 | Node Mailer | (if use) pengiriman email menggunakan NodeJS | [doc](https://nodemailer.com/about/) |
 | WhatsApp API (socket) | (if use) menggunakan service whatsapp didalam NodeJS | [doc](https://github.com/adiwajshing/baileys) |
 
-### Setup awal (hanya sekali saja)
+### Global Setup (hanya sekali saja dalam 1 perangkat)
+
 untuk menginisial kebutuhan dalam running dan developing
+```bash
+npm install -g yarn pm2 nodemon
+```
 
-    npm install -g yarn pm2 nodemon
-
-### Install Dependencies (jika belum ada folder node_modules)
-
-    yarn install
-
-
-
----
-
-## CLI App
-
-
-
-
-
-
-
-
-
-
-
-##### clone template
+### Clone Template
 
 ```bash
 git clone https://github.com/jefripunza/jump-boot my-project-name
 ```
 
-lalu pada folder **forFrontEnd**, copy file **sendToBackend.js** kemudian paste-kan **kedalam project frontend anda** dan **install dependensi** yang diperlukan didalam project frontend dengan cara:
+### Install Dependencies
+```bash
+yarn install
+```
 
-<br/>
+### setup .env
 
+rename **.env-example** menjadi file **.env**, kemudian rubah sesuai kebutuhan/require :
+
+```text
+MAILER_EMAIL_LOCAL=
+MAILER_PASS_LOCAL=
+
+MAILER_EMAIL_DEV=
+MAILER_PASS_DEV=
+
+MAILER_EMAIL_PRODUCTION=
+MAILER_PASS_PRODUCTION=
+```
+
+NOTE : jika anda menggunakan Node Mailer, maka setup diatas adalah **WAJIB**. jika tidak? abaikan saja setup ini.
+
+<br />
+
+---
+
+<br />
+
+## CLI App
+
+<br />
+
+---
+
+<br />
+
+## Remote Frontend Package (RFP)
+
+untuk mengaktifkan **RFP**, anda perlu menambahkan **jwt:true** di setup server didalam file **Main.js**
+
+kemudian copy file **[sendToBackend.js](https://github.com/jefripunza/jump-boot/blob/main/jump-boot/rfp/sendToBackend.js)** kemudian paste-kan **kedalam root project frontend anda** dengan nama **sendToBackend.js** dan **install dependency** yang diperlukan didalam project frontend dengan cara:
 #### frontend development side
 
 ```bash
-npm -i -D archiver axios
+npm -i -D form-data archiver && npm i axios
 
 // or
 
-yarn add -D archiver axios
+yarn add -D form-data archiver && yarn add axios
 ```
 
 rubah **package.json** pada bagian build menjadi :
-
-##### config.js
 
 ```json
 // (default) build folder is "build"
@@ -159,105 +176,68 @@ rubah **package.json** pada bagian build menjadi :
 
 <br />
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## How to USE
 
-### first setup
+perhatikan dengan seksama cara menggunakan framework ini :
 
-buat file **.env** kedalam project dengan variabel sebagai berikut :
-
-##### .env
-
-```text
-MAILER_EMAIL=
-MAILER_PASS=
-
-MONGODB_URL=
-
-MYSQL_HOST=
-MYSQL_USER=
-MYSQL_PASS=
-MYSQL_NAME=
-
-PG_HOST=
-PG_USER=
-PG_PASS=
-PG_DATABASE=
-PG_PORT=5432
-
-TELEGRAM_TOKEN=<if you use telegram bot>
-```
-
-untuk merubah konfigurasi dasar silahkan masuk kedalam :
-
-##### config.js
+### setup server (Main.js)
 
 ```javascript
 ...
-const app = {
-    app_name: "NodeJS MVC with JS Framework",
-    port: process.env.PORT || 5000,
-    host: "0.0.0.0",
-    ...
+server = {
+    debug: true, // show endpoint if hit
+    database: true, // use database
+    doc: true, // like Swagger (#your_root#/doc)
+    public_directory: true,
+    maxUploadSize: 20, // MB
+    // security
+    cors: true,
+    helmet: true,
+    jwt: true,
 }
 ...
 ```
 
-untuk menginisial aplikasi yang ingin digunakan silahkan masuk kedalam :
 
-##### server.js
 
-```javascript
-...
-// Webserver
-const {
-    app,
-    webserver,
-} = require("./app/webserver")({
-    remoteFrontendPackage: true,
-    bodyParser: true,
-    secure: {
-        parameterPollution: true,
-        contentSecurityPolicy: {
-            defaultSrc: ["'self'"],
-            scriptSrc: scriptSources,
-            scriptSrcElem: scriptSources,
-            styleSrc: styleSources,
-            connectSrc: connectSources,
-            reportUri: '/report-violation',
-        },
-        helmet: true,
-        cors: true,
-        cookie: 'your-secret-key',
-        allowOrigin: "*",
-        allowHeaders: "x-www-form-urlencoded, Origin, X-Requested-With, Content-Type, Accept, Authorization, *",
-    },
-    public: true,
-    debug: true,
-})
 
-// Web Socket
-const io = require('./app/websocket')({
-    app,
-    webserver,
-    debug: true,
-})
 
-// Mailer
-const Mailer = require("./app/mailer")
-const mail = new Mailer({
-  //// easy to use
-  service: "gmail",
 
-  // --- or ---
 
-  //// manual ~> https://nodemailer.com/smtp/customauth/
-  // host: "smtp.gmail.com",
-  // port: 587, // Port for TLS/STARTTLS
-  // secure: false, // true for 465, false for other ports
-})
-mail.use(app)
-...
-```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <br />
 

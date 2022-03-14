@@ -8,7 +8,7 @@ class Main {
     clearTerminal = true;
 
     server = {
-        debug: true,
+        debug: true, // show endpoint if hit
         database: true, // use database
         doc: true, // like Swagger
         public_directory: true,
