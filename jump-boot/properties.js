@@ -13,7 +13,11 @@ const fs = require('fs');
 function propertiesReader(target) {
     return fs
         .readFileSync(target, { encoding: 'utf-8' })
+        .replace(/\r/g, '')
+        .replace(/undefined/g, '')
         .split('\n')
+        // eslint-disable-next-line arrow-body-style
+        .filter(v => !String(v).startsWith('#') && v !== '')
         .reduce((simpan, item) => {
             const [key, value] = String(item).split('=');
             return String(key).startsWith('#') || String(key).length === 0 ?
@@ -32,17 +36,17 @@ const default_env = 'dev'; // reason : local bisa hit dev, and dev pasti konsums
 
 let properties_env = fs.existsSync(path.join(root, 'application.properties')) ?
     propertiesReader(path.join(root, 'application.properties'))[
-        'spring.profiles.active'
+    'spring.profiles.active'
     ] :
     default_env; // default if "application.properties" not found
 process.env.application = properties_env; // setup env
 const properties_available = fs
     .readdirSync(path.join(root))
-// eslint-disable-next-line id-length
+    // eslint-disable-next-line id-length
     .filter((v) => {
         return String(v).endsWith('.properties') && String(v).includes('-');
     })
-// eslint-disable-next-line id-length
+    // eslint-disable-next-line id-length
     .map((v) => {
         return String(v).split('-')[1].split('.')[0];
     });
@@ -73,7 +77,7 @@ const properties_fix = key_list.reduce((obj, key) => {
     let save = {};
     String(key)
         .split('.')
-    // eslint-disable-next-line id-length
+        // eslint-disable-next-line id-length
         .reduce((r, e, i, a) => {
             // eslint-disable-next-line no-return-assign
             return a.length - 1 === i ? r[e] = value : r[e] = {};

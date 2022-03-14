@@ -207,11 +207,11 @@ class Server {
                         process.exit(1);
                         // return error
                     });
-                this.app.use((req, res, next) => {
-                    req.database = connection;
-                    next();
-                });
-                global.connection = connection;
+                // this.app.use((req, res, next) => {
+                //     req.database = connection;
+                //     next();
+                // });
+                // global.connection = connection;
                 return connection;
             }
             console.log('no database configuration!');
