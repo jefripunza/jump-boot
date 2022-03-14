@@ -348,13 +348,15 @@ jika anda menggunakan JWT, anda perlu mengaktifkan didalam configurasi server de
 
 ```javascript
 {
-    ...
-    jwt: true, // untuk mengenerate otomatis secret token didalam file .env
+    server = {
+        ...
+        jwt: true, // untuk mengenerate otomatis secret token didalam file .env
 
-    // or
+        // or
 
-    jwt: 20, // panjang dari secret token yang akan di generate
-    ...
+        jwt: 20, // panjang dari secret token yang akan di generate
+        ...
+    }
 }
 ```
 
@@ -439,7 +441,8 @@ kemudian didalam setiap **Endpoint** didalam file **Controller** menggunakan ano
     }
 ```
 
-
+maka akan muncul seperti ini di endpoint "http://localhost:#port/#root/doc" (example) :
+![banner](jump-boot/img/DOC-EXAMPLE.JPG)
 
 
 
