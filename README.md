@@ -417,9 +417,11 @@ jika anda menggunakan auto documentation, silahkan simak berikut ini :
 aktifkan terlebih dahulu didalam configurasi server dengan cara :
 ```javascript
 {
-    ...
-    doc: true,
-    ...
+    server = {
+        ...
+        doc: true,
+        ...
+    }
 }
 ```
 
