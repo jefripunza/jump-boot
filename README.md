@@ -1,5 +1,3 @@
-# Jump-Boot (NodeJS Framework)
-
 ![banner](jump-boot/BANNER.jpg)
 
 ---
@@ -51,9 +49,11 @@
 [![Custom badge](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)](https://www.w3schools.com/css/)
 [![Custom badge](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)](https://www.javascript.com/)
 
+[![Custom badge](https://img.shields.io/badge/-mocha-%238D6748?style=for-the-badge&logo=mocha&logoColor=white)](https://mochajs.org/)
+
 ## Introduction
 
-Konsep dasar framework ini adalah mengacu kepada struktur dari **[Java Spring-Boot](https://spring.io/projects/spring-boot)** yang mana semua file project berbentuk OOP dan struktur nya **hampir mirip** dengan ****Java Spring-Boot****. Saya sengaja membuat ini supaya teman2 yang dari Java Spring-Boot yang ingin **Hijrah** ke NodeJS maka menggunakan ini akan sangat familiar.
+Konsep dasar framework ini adalah mengacu kepada struktur dari **[Java Spring-Boot](https://spring.io/projects/spring-boot)** yang mana semua file project berbentuk OOP dan struktur nya **hampir mirip** dengan \***\*Java Spring-Boot\*\***. Saya sengaja membuat ini supaya teman2 yang dari Java Spring-Boot yang ingin **Hijrah** ke NodeJS maka menggunakan ini akan sangat familiar.
 
 ![RFP](jump-boot/RFP.jpg)
 
@@ -65,19 +65,22 @@ Mudah-mudahan bermanfaat...
 ---
 
 <br />
-<b></b>
 
 ## First Prepare
 
-dikarenakan saya menggunakan **Node.JS**, maka yang harus dipersiapkan terlebih dahulu adalah :
+dikarenakan saya menggunakan **NodeJS**, maka yang harus dipersiapkan terlebih dahulu adalah :
 | Aplikasi | Kegunaan | Link |
 |----------|----------|------|
 | NodeJS | lingkungan javascript untuk running JS diluar browser | [download & install](https://nodejs.org/en/) |
-| Yarn | package manager yang lebih mudah digunakan daripada **npm** | [doc](https://yarnpkg.com/getting-started/usage) |
+| Yarn | package manager yang lebih mudah digunakan daripada **NPM** | [doc](https://yarnpkg.com/getting-started/usage) |
 | PM2 | process manager untuk running microservices | [doc](https://pm2.keymetrics.io/docs/usage/quick-start/) |
 | Nodemon | auto reload service jika project di save (for development only) | [doc](https://www.npmjs.com/package/nodemon) |
-| ExpressJS | framework web app untuk **Node**.**js** yang ditulis dengan bahasa pemrograman JavaScript | [doc](https://expressjs.com/en/starter/basic-routing.html) |
+| ExpressJS | framework web app untuk **NodeJS** yang ditulis dengan bahasa pemrograman JavaScript | [doc](https://expressjs.com/en/starter/basic-routing.html) |
+| JSON Web Token | salah satu keamanan akses di NodeJS | [doc](https://jwt.io/) |
 | TypeORM | sebagai penghubung dan mempermudah membuat aplikasi menggunakan database berbasis rasional | [doc](https://typeorm.io/#/connection-options/common-connection-options) |
+| Socket.io | (if use) teknologi protokol websocket untuk data realtime | [doc](https://socket.io/docs/v4/) |
+| Node Mailer | (if use) pengiriman email menggunakan NodeJS | [doc](https://nodemailer.com/about/) |
+| WhatsApp API (socket) | (if use) menggunakan service whatsapp didalam NodeJS | [doc](https://github.com/adiwajshing/baileys) |
 
 ##### clone template
 
