@@ -6,17 +6,34 @@
 require('dotenv').config();
 require('module-alias/register');
 
+const path = require('path');
+const fs = require('fs');
+
+const path_package_json = path.join(__dirname, '..', 'package.json')
+let package_json = require(path_package_json)
+
 const { Server, ChatServer, Mailer, WhatsApp } = require('.');
 const Main = require('../Main');
 
-// eslint-disable-next-line no-async-promise-executor
 module.exports = new Promise(async (resolve, reject) => {
 
-    const JumpBoots = new Main(); // core
+    const JumpBoot = new Main(); // core
 
-    if (JumpBoots.clearTerminal) {
+    if (JumpBoot.clearTerminal) { // first
         console.log('\033[2J'); // clear CLI
     }
+
+    // auto config
+    await new Promise((next) => {
+        const folder_project = String(__dirname).split('\\').reverse()[1]
+        const { name } = package_json
+        if (folder_project !== name) {
+            package_json.name = folder_project
+            const new_package_json = package_json
+            fs.writeFileSync(path_package_json, JSON.stringify(new_package_json, null, 4), { encoding: 'utf-8' })
+        }
+        next()
+    })
 
     // Global Variable
     let server = false
@@ -24,35 +41,38 @@ module.exports = new Promise(async (resolve, reject) => {
     let routes = [];
 
     try {
-        if (JumpBoots.server) {
-            server = new Server(JumpBoots.server); // init all configure
-            // ============= Database Connecting ============= //
-            if (JumpBoots.server.database) {
-                await server.initDatabase();
-            }
-            webserver = await server.run();
+        if (JumpBoot.server) {
+            await new Promise(async (next) => {
+                server = new Server(JumpBoot.server); // init all configure
+                // ============= Database Connecting ============= //
+                if (JumpBoot.server.database) {
+                    await server.initDatabase();
+                }
+                webserver = await server.run();
+                next()
+            })
         }
 
         // =================== Web Socket =================== //
-        if (JumpBoots.chatServer && webserver) {
-            const chatServer = new ChatServer(webserver.httpServer, JumpBoots.chatServer);
+        if (JumpBoot.chatServer && webserver) {
+            const chatServer = new ChatServer(webserver.httpServer, JumpBoot.chatServer);
             const io = await chatServer.run();
-            if (JumpBoots.chatServer.callback) {
-                JumpBoots.chatServer.callback((websocket) => { // callback
+            if (JumpBoot.chatServer.callback) {
+                JumpBoot.chatServer.callback((websocket) => { // callback
                     websocket(io)
                 })
             }
         }
 
         // =================== Mailer =================== //
-        if (JumpBoots.mailer && webserver) {
-            const mailer = new Mailer(JumpBoots.mailer);
+        if (JumpBoot.mailer && webserver) {
+            const mailer = new Mailer(JumpBoot.mailer);
             mailer.use(webserver.app);
         }
 
-        if (JumpBoots.whatsapp && webserver) {
+        if (JumpBoot.whatsapp && webserver) {
             // ================ WhatsApp OTP ================ //
-            const whatsapp = new WhatsApp(JumpBoots.whatsapp);
+            const whatsapp = new WhatsApp(JumpBoot.whatsapp);
             whatsapp.use(webserver.app);
         }
 
@@ -63,7 +83,7 @@ module.exports = new Promise(async (resolve, reject) => {
         }
 
         // RFP (Remote Frontend Package) (js-framework)
-        if (server && (JumpBoots.rfp || JumpBoots.RFP)) {
+        if (server && (JumpBoot.rfp || JumpBoot.RFP)) {
             server.renderClient(); // if use reactjs or others
         }
 

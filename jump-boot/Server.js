@@ -44,9 +44,6 @@ const { isArray, isObject, isString, isEmail, fixUrl } = require('./Helpers');
 const { log, message } = require('./Styles');
 const { randomHEX } = require('./encryption');
 
-// package information
-const { name } = require('../package.json')
-
 class Server {
     // eslint-disable-next-line require-jsdoc
     resetRun() {
@@ -707,9 +704,20 @@ class Server {
             });
             // get raw data
             this.app.get('/doc/data', (req, res) => {
+                // package information
+                const package_json = require('../package.json')
+                delete package_json['lint-staged'] // type
+                delete package_json.repository
+                // eslint-disable-next-line no-underscore-dangle
+                delete package_json._moduleAliases
+                delete package_json.dependencies
+                delete package_json.devDependencies
+                delete package_json.main
+                delete package_json.scripts
+                delete package_json.type
                 return res.status(StatusCode.SUCCESS.OK).json({
-                    name,
                     routes: listAllRoutes,
+                    ...package_json,
                 })
             });
         }

@@ -132,6 +132,7 @@ module.exports = {
 
         // Variables
         'init-declarations': [OFF, 'always'],
+        'no-async-promise-executor': OFF,
         'no-catch-shadow': WARN,
         'no-delete-var': ERROR,
         'no-label-var': ERROR,

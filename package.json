@@ -21,13 +21,13 @@
         "test": "mocha tests/*.js --exit"
     },
     "_moduleAliases": {
-        "@root": ".",
-        "@jump-boot": "jump-boot",
-        "@controllers": "controllers",
-        "@middleware": "middleware",
-        "@entities": "models/entities",
-        "@repository": "models/repository",
-        "@services": "services"
+        "@root": "D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot",
+        "@jump-boot": "D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot\\jump-boot",
+        "@controllers": "D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot\\controllers",
+        "@middleware": "D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot\\middleware",
+        "@entities": "D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot\\models\\entities",
+        "@repository": "D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot\\models\\repository",
+        "@services": "D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot\\D:\\Project App\\jump-boot\\services"
     },
     "lint-staged": {
         "js-framework/*.{js,json}": [
