@@ -205,10 +205,10 @@ NOTE : untuk isi file yang baru terbuat akan ter-include beberapa endpoint stand
 
 untuk mengaktifkan **RFP**, anda perlu menambahkan di setup server didalam file **Main.js** :
 ```javascript
-{
-    ...
+class Main {
+
     rfp = true
-    ...
+
 }
 ```
 
@@ -262,8 +262,8 @@ perhatikan dengan seksama cara menggunakan framework ini :
 
 ### setup server (Main.js)
 ```javascript
-{
-    ...
+class Main {
+
     server = {
         debug: true, // show endpoint if hit
         database: true, // use database
@@ -275,14 +275,14 @@ perhatikan dengan seksama cara menggunakan framework ini :
         helmet: true,
         jwt: true,
     }
-    ...
+
 }
 ```
 
 ### setup mailer (Main.js)
 ```javascript
-{
-    ...
+class Main {
+
     mailer = process.env.application === 'production' ?
         {
             host: 'smtp.ethereal.email',
@@ -311,18 +311,18 @@ perhatikan dengan seksama cara menggunakan framework ini :
                     pass: process.env.MAILER_PASS_LOCAL,
                 },
             };
-    ...
+
 }
 ```
 
 ### setup whatsapp (Main.js)
 ```javascript
-{
-    ...
+class Main {
+
     whatsapp = {
         name: 'My Project Name',
     }
-    ...
+
 }
 ```
 
@@ -350,21 +350,23 @@ kemudian jalankan sejenak project ini untuk __mengeluarkan barcode__, kemudian *
 jika anda menggunakan JWT, anda perlu mengaktifkan didalam configurasi server dengan cara :
 
 ```javascript
-{
+class Main {
+
     server = {
-        ...
         jwt: true, // untuk mengenerate otomatis secret token didalam file .env
 
         // or
 
         jwt: 20, // panjang dari secret token yang akan di generate
-        ...
     }
+
 }
 ```
 
 lalu untuk membuat token baru saat login, seperti ini untuk controller nya (example) :
 ```javascript
+class AuthController {
+
   /**
    * @PostMapping ("/login")
    * @ValidateBody ({ username: "string", password: "string" })
@@ -384,10 +386,14 @@ lalu untuk membuat token baru saat login, seperti ini untuk controller nya (exam
             super.sendServerErrorJson(res, error.message);
         }
     };
+
+}
 ```
 
 lalu pada service nya seperti ini :
 ```javascript
+class LoginService {
+
     loginGetToken = async (username, password) => {
         const result = await this.LoginRepository.fromUserWhereUsernameAndPassword(username, password)
         if (result) {
@@ -401,17 +407,23 @@ lalu pada service nya seperti ini :
         }
         return false
     }
+
+}
 ```
 
 dan setelah itu cara mengamankan endpoint, tulis anotasi seperti ini :
 ```javascript
+class Controller {
+
   /**
    * @GetMapping ("/")
    * @Jwt
    */
     isRegistered = async (req, res) => {
-        ...
+        // code
     }
+
+}
 ```
 
 ### setup auto documentation (like Swagger)
@@ -419,17 +431,19 @@ jika anda menggunakan auto documentation, silahkan simak berikut ini :
 
 aktifkan terlebih dahulu didalam configurasi server dengan cara :
 ```javascript
-{
+class Main {
+
     server = {
-        ...
         doc: true,
-        ...
     }
+
 }
 ```
 
 kemudian didalam setiap **Endpoint** didalam file **Controller** menggunakan anotasi seperti ini (example) :
 ```javascript
+class Controller {
+
   /**
    * @GetMapping ("/")
    * // for documentation (includes unit test)
@@ -444,6 +458,8 @@ kemudian didalam setiap **Endpoint** didalam file **Controller** menggunakan ano
     isRegistered = async (req, res) => {
         ...
     }
+
+}
 ```
 
 maka akan muncul seperti ini di endpoint "http://localhost:#port/#root/doc" (example) :
