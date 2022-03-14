@@ -82,6 +82,31 @@ dikarenakan saya menggunakan **NodeJS**, maka yang harus dipersiapkan terlebih d
 | Node Mailer | (if use) pengiriman email menggunakan NodeJS | [doc](https://nodemailer.com/about/) |
 | WhatsApp API (socket) | (if use) menggunakan service whatsapp didalam NodeJS | [doc](https://github.com/adiwajshing/baileys) |
 
+### Setup awal (hanya sekali saja)
+untuk menginisial kebutuhan dalam running dan developing
+
+    npm install -g yarn pm2 nodemon
+
+### Install Dependencies (jika belum ada folder node_modules)
+
+    yarn install
+
+
+
+---
+
+## CLI App
+
+
+
+
+
+
+
+
+
+
+
 ##### clone template
 
 ```bash
