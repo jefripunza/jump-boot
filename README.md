@@ -127,6 +127,10 @@ MAILER_PASS_PRODUCTION=
 
 NOTE : jika anda menggunakan Node Mailer, maka setup diatas adalah **WAJIB**. jika tidak? abaikan saja setup ini.
 
+### setup .properties
+
+karena framework ini terinspirasi dari **Java Spring-Boot**, maka setup nya pun sama dengan framework tersebut. dengan alasan jika ingin migrasi tinggal copas saja settingan dari **Java Spring-Boot** kedalam project ini maka sudah otomatis terkonfigurasi.
+
 <br />
 
 ---
