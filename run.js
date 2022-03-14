@@ -24,14 +24,26 @@ function copyFile(source, target) {
     class_name = String(class_name).includes('.') ?
         String(class_name).split('.')[0] :
         class_name;
+    let type_file = String(target).split('\\')[3]
+    type_file = String(type_file).toLowerCase().endsWith('s') ? String(type_file)
+        // eslint-disable-next-line arrow-body-style
+        .split('').reverse().filter((_, i) => i !== 0).reverse()
+        // eslint-disable-next-line arrow-body-style
+        .map((v, i) => i === 0 ? String(v).toUpperCase() : v).join('') : type_file
+    class_name = String(class_name).toLowerCase().endsWith('controller') ? class_name : `${class_name}${type_file}`
     const file = String(fs.readFileSync(source, { encoding: 'utf-8' }))
         .replace(/title_example/gi, splitCamelCase(class_name))
         .replace(/_Example_/gi, class_name)
         .replace(
             /#example#/gi,
-            splitCamelCase(class_name).toLowerCase().split(' ').join('_')
+            splitCamelCase(class_name)
+                .toLowerCase().split(' ').join('_')
+                // eslint-disable-next-line arrow-body-style
+                .split('_').filter(v => v !== 'controller').join('_')
         );
-    fs.writeFileSync(target, file, { encoding: 'utf-8' });
+    // eslint-disable-next-line arrow-body-style
+    const fix_target = `${String(target).split('\\').reverse().map((v, i) => i === 0 ? class_name : v).reverse().join('\\')}.js`
+    fs.writeFileSync(fix_target, file, { encoding: 'utf-8' });
 }
 
 /**
@@ -100,7 +112,7 @@ function lastArgument(argv, numRequired) {
     // eslint-disable-next-line id-length
     const kill_urutan = Array.from({ length: numRequired - 1 }, (v, k) => {
         return k + 1;
-    // eslint-disable-next-line id-length
+        // eslint-disable-next-line id-length
     }).map((v) => {
         return v - 1;
     });
@@ -130,7 +142,7 @@ function checkCommands(yargs, argv, numRequired) {
             // console.log({ a: argv._.length, numRequired });
         }
     } else {
-    // check for unknown command
+        // check for unknown command
         const kill_argv = lastArgument(argv, numRequired);
         if (argv._.length !== numRequired) {
             if (!showHelp) {
@@ -182,9 +194,9 @@ let yargs = require('yargs');
 // eslint-disable-next-line no-var
 var argv = yargs
     .usage('usage: $0 <command>')
-// eslint-disable-next-line no-shadow
+    // eslint-disable-next-line no-shadow
     .command('create', 'create a new [files|module]', (yargs) => {
-    // create ...
+        // create ...
         let name = yargs?.argv?.name;
         // eslint-disable-next-line require-jsdoc
         function sendFile(to) {
@@ -194,7 +206,7 @@ var argv = yargs
                     target_path[to](
                         String(name)
                             .split(' ')
-                        // eslint-disable-next-line id-length
+                            // eslint-disable-next-line id-length
                             .map((v) => {
                                 return capitalizeFirstLetter(v);
                             })
@@ -207,7 +219,7 @@ var argv = yargs
                     target_path[to](
                         String('Example')
                             .split(' ')
-                        // eslint-disable-next-line id-length
+                            // eslint-disable-next-line id-length
                             .map((v) => {
                                 return capitalizeFirstLetter(v);
                             })
@@ -284,10 +296,10 @@ var argv = yargs
             checkCommands(yargs, argv, 2);
         }
     })
-// eslint-disable-next-line no-shadow
+    // eslint-disable-next-line no-shadow
     .command('git', 'version control source code', (yargs) => {
-    // git...
-    // eslint-disable-next-line no-unused-vars
+        // git...
+        // eslint-disable-next-line no-unused-vars
         let message = yargs?.argv?.message;
         const list = daftar.git;
         argv = yargs

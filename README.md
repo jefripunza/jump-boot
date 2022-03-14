@@ -1,4 +1,4 @@
-![banner](jump-boot/BANNER.jpg)
+![banner](jump-boot/img/BANNER.jpg)
 
 ---
 
@@ -55,7 +55,7 @@
 
 Konsep dasar framework ini adalah mengacu kepada struktur dari **[Java Spring-Boot](https://spring.io/projects/spring-boot)** yang mana semua file project berbentuk OOP dan struktur nya **hampir mirip** dengan **Java Spring-Boot**. Saya sengaja membuat ini supaya teman2 yang dari Java Spring-Boot yang ingin **Hijrah** ke NodeJS maka menggunakan ini akan sangat familiar.
 
-![RFP](jump-boot/RFP.jpg)
+![RFP](jump-boot/img/RFP.jpg)
 
 Ditambah dengan metode frontend development yang saya buat sendiri dengan nama **Remote Frontend Package (RFP)**, yaitu dengan mengarsipkan semua hasil build dan file archive-nya (zip) dikirim ke pihak backend agar isi file archive di ekstrak ke dalam folder **js-framework** untuk ditampilkan ke publik.
 
@@ -126,6 +126,42 @@ NOTE : jika anda menggunakan Node Mailer, maka setup diatas adalah **WAJIB**. ji
 <br />
 
 ## CLI App
+
+cara menggunakan CLI App, simak berikut ini :
+
+pastikan file **run.js** ada di project ini, lalu ketik seperti ini di terminal :
+```bash
+node run
+```
+
+maka akan muncul seperti ini :
+![banner](jump-boot/img/CLI-RUN.JPG)
+
+untuk melihat menu file project dasar apa saja yang bisa di create secara otomatis dengan mengetik seperti ini di terminal :
+```bash
+node run create
+```
+
+maka akan muncul seperti ini :
+![banner](jump-boot/img/CLI-CREATE.JPG)
+
+kemudian jika ingin membuat file project dasar secara otomatis dengan mengetik seperti ini di terminal (example) :
+```bash
+node run create controller   // auto generate dengan nama "ExampleController.js"
+
+// or
+
+node run create controller --name contohSaja   // untuk custom nama file beserta endpoint dan nama class nya
+```
+
+maka akan muncul seperti ini (example) :
+![banner](jump-boot/img/CLI-RESULT.JPG)
+
+akan terbuat otomatis file seperti ini (example) :
+![banner](jump-boot/img/CLI-FILE-VIEW.JPG)
+
+dan hasilnya akan seperti ini (example) :
+![banner](jump-boot/img/CLI-RESULT.JPG)
 
 <br />
 
