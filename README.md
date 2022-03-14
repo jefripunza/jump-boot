@@ -256,6 +256,25 @@ perhatikan dengan seksama cara menggunakan framework ini :
 }
 ```
 
+NOTE : jika anda pertama kali menggunakan whatsapp, anda harus merubah tipe whatsapp anda menjadi **multi device** pada pengaturan aplikasi handphone :
+```text
+- Android
+
+Buka WhatsApp, pilih More Options.
+Ketuk Linked Devices.
+Ketuk Multi-Device Beta.
+Ketuk Join Beta.
+
+// atau
+
+- iPhone
+
+Pilih WhatsApp Settings.
+Ketuk Linked Devices.
+Ketuk Multi-Device Beta, ketuk Join Beta.
+```
+kemudian jalankan sejenak project ini untuk __mengeluarkan barcode__, kemudian **scan barcode yang muncul di terminal**. akan ada file baru bernama **whatsapp-session.json** untuk menyimpan session login whatsapp anda.
+
 <br />
 
 ---
