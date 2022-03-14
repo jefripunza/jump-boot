@@ -103,6 +103,10 @@ git clone https://github.com/jefripunza/jump-boot .
 ### Install Dependencies
 
 ```bash
+npm install
+
+// or
+
 yarn install
 ```
 
