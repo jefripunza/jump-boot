@@ -163,6 +163,8 @@ akan terbuat otomatis file seperti ini (example) :
 dan hasilnya akan seperti ini (example) :
 ![banner](jump-boot/img/CLI-RESULT.JPG)
 
+NOTE : untuk isi file yang baru terbuat akan ter-include beberapa endpoint standar seperti **GetMapping, PostMapping, PutMapping, dan DeleteMapping** beserta anotasi2 standar
+
 <br />
 
 ---
@@ -215,6 +217,8 @@ rubah **package.json** pada bagian build menjadi :
 
 // and so on, following your basic javascript framework build folder
 ```
+
+NOTE : khusus untuk frontend, rubah password yang ada didalam file **sendToBackend.js** dengan password RFP dari Backend yang tergenerate otomatis ketika project ini di running.
 
 <br />
 
