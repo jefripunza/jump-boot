@@ -466,6 +466,8 @@ maka akan muncul seperti ini di endpoint "http://localhost:#port/#root/doc" (exa
 ![banner](jump-boot/img/DOC-EXAMPLE.JPG)
 ![banner](jump-boot/img/DOC-1.JPG)
 ![banner](jump-boot/img/DOC-2.JPG)
+![banner](jump-boot/img/DOC-3.JPG)
+![banner](jump-boot/img/DOC-4.JPG)
 
 
 
