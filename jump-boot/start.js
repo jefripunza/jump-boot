@@ -12,7 +12,10 @@ const fs = require('fs');
 const path_package_json = path.join(__dirname, '..', 'package.json')
 let package_json = require(path_package_json)
 
-const { Server, ChatServer, Mailer, WhatsApp } = require('.');
+const {
+    Server, ChatServer, Mailer, WhatsApp,
+    isObject,
+} = require('.');
 const Main = require('../Main');
 
 module.exports = new Promise(async (resolve, reject) => {
@@ -41,7 +44,7 @@ module.exports = new Promise(async (resolve, reject) => {
     let routes = [];
 
     try {
-        if (JumpBoot.server) {
+        if (JumpBoot.server && isObject(JumpBoot.server)) {
             await new Promise(async (next) => {
                 server = new Server(JumpBoot.server); // init all configure
                 // ============= Database Connecting ============= //
@@ -54,7 +57,7 @@ module.exports = new Promise(async (resolve, reject) => {
         }
 
         // =================== Web Socket =================== //
-        if (JumpBoot.chatServer && webserver) {
+        if (JumpBoot.chatServer && isObject(JumpBoot.chatServer) && webserver) {
             const chatServer = new ChatServer(webserver.httpServer, JumpBoot.chatServer);
             const io = await chatServer.run();
             if (JumpBoot.chatServer.callback) {
@@ -65,12 +68,12 @@ module.exports = new Promise(async (resolve, reject) => {
         }
 
         // =================== Mailer =================== //
-        if (JumpBoot.mailer && webserver) {
+        if (JumpBoot.mailer && isObject(JumpBoot.mailer) && webserver) {
             const mailer = new Mailer(JumpBoot.mailer);
             mailer.use(webserver.app);
         }
 
-        if (JumpBoot.whatsapp && webserver) {
+        if (JumpBoot.whatsapp && isObject(JumpBoot.whatsapp) && webserver) {
             // ================ WhatsApp OTP ================ //
             const whatsapp = new WhatsApp(JumpBoot.whatsapp);
             whatsapp.use(webserver.app);
@@ -83,7 +86,7 @@ module.exports = new Promise(async (resolve, reject) => {
         }
 
         // RFP (Remote Frontend Package) (js-framework)
-        if (server && (JumpBoot.rfp || JumpBoot.RFP)) {
+        if (server && (JumpBoot.rfp || JumpBoot.RFP) && (isObject(JumpBoot.rfp) || isObject(JumpBoot.RFP))) {
             server.renderClient(); // if use reactjs or others
         }
 

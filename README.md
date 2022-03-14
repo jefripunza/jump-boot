@@ -275,6 +275,118 @@ Ketuk Multi-Device Beta, ketuk Join Beta.
 ```
 kemudian jalankan sejenak project ini untuk __mengeluarkan barcode__, kemudian **scan barcode yang muncul di terminal**. akan ada file baru bernama **whatsapp-session.json** untuk menyimpan session login whatsapp anda.
 
+
+### setup JWT (Main.js ~> server)
+jika anda menggunakan JWT, anda perlu mengaktifkan didalam configurasi server dengan cara :
+
+```javascript
+{
+    ...
+    jwt: true, // untuk mengenerate otomatis secret token didalam file .env
+
+    // or
+
+    jwt: 20, // panjang dari secret token yang akan di generate
+    ...
+}
+```
+
+lalu untuk membuat token baru saat login, seperti ini untuk controller nya (example) :
+```javascript
+  /**
+   * @PostMapping ("/login")
+   * @ValidateBody ({ username: "string", password: "string" })
+   */
+    login = async (req, res) => {
+        const { username, password } = req.body;
+        try {
+            const isLogin = await this.LoginService.loginGetToken(username, password)
+            if (isLogin) {
+                super.sendSuccessJson(res, {
+                    ...isLogin,
+                });
+            } else {
+                super.sendClientErrorJson(res, 'maaf, username atau password salah')
+            }
+        } catch (error) {
+            super.sendServerErrorJson(res, error.message);
+        }
+    };
+```
+
+lalu pada service nya seperti ini :
+```javascript
+    loginGetToken = async (username, password) => {
+        const result = await this.LoginRepository.fromUserWhereUsernameAndPassword(username, password)
+        if (result) {
+            // update last_login
+            await this.LoginRepository.updateFromUserWhereId(result.id)
+            return this.jwt.createTokenLogin( // ini cara mendapatkan token dan refresh token
+                result, // data yang akan di jadikan token
+                this.jwt.valueOneHour, // expired untuk token utama
+                this.jwt.valueOneDay, // expired untuk refresh token
+            );
+        }
+        return false
+    }
+```
+
+dan setelah itu cara mengamankan endpoint, tulis anotasi seperti ini :
+```javascript
+  /**
+   * @GetMapping ("/")
+   * @Jwt
+   */
+    isRegistered = async (req, res) => {
+        ...
+    }
+```
+
+### setup auto documentation (like Swagger)
+jika anda menggunakan auto documentation, silahkan simak berikut ini :
+
+aktifkan terlebih dahulu didalam configurasi server dengan cara :
+```javascript
+{
+    ...
+    doc: true,
+    ...
+}
+```
+
+kemudian didalam setiap **Endpoint** didalam file **Controller** menggunakan anotasi seperti ini (example) :
+```javascript
+  /**
+   * @GetMapping ("/")
+   * // for documentation (includes unit test)
+   * @Doc ("untuk mengecek apakah nomer kita terdaftar di whatsapp")
+   * @DocHeaders     ({ authorization:"string" })
+   * @DocHeadersDesc ({ authorization:"untuk keamanan, berbentuk Bearer token" })
+   * @DocParams     ({ no_hp:"string" })
+   * @DocParamsDesc ({ no_hp:"nomor handphone yang ingin di cek" })
+   * @Doc200 ({"no_hp":"string","registered":"boolean"})
+   * @Doc400 ({ message:"string" })
+   */
+    isRegistered = async (req, res) => {
+        ...
+    }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <br />
 
 ---
