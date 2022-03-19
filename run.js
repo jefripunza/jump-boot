@@ -319,6 +319,9 @@ var argv = yargs
             checkCommands(yargs, argv, 2);
         }
     })
+
+
+    // ==============================================================================================
     // eslint-disable-next-line no-shadow
     .command('git', 'version control source code', (yargs) => {
         // git...
@@ -327,16 +330,27 @@ var argv = yargs
         const list = daftar.git;
         argv = yargs
             .usage('usage: $0 git <item> [options]')
-            .command('init', 'first initial project', () => {
+            .command('force', 'get publish now...', async () => {
+                const commit = process.argv
+                    .filter((v, i) => {
+                        return i > 3;
+                    })
+                    .join(' ');
+                const cmd = [
+                    'git add .',
+                    `git commit -am "${commit}"`,
+                    'git push -f -u origin HEAD:main',
+                ].join(' && ');
                 try {
-                    console.log('creating init :)');
+                    await execute(cmd);
+                    console.log('success push :)');
                 } catch (error) {
-                    console.log(error.message);
+                    console.error(error);
                 } finally {
                     exit();
                 }
             })
-            .command('commit', 'create a commit message', () => {
+            .command('commit', 'create a commit message', async () => {
                 try {
                     console.log('creating commit :)');
                 } catch (error) {
@@ -345,9 +359,9 @@ var argv = yargs
                     exit();
                 }
             })
-            .command('push', 'get publish now...', () => {
+            .command('push', 'get publish...', () => {
                 try {
-                    console.log('creating push :)');
+                    console.log('success push :)');
                 } catch (error) {
                     console.log(error.message);
                 } finally {
