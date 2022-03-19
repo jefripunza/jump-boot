@@ -1,7 +1,7 @@
 {
     "name": "jump-boot",
     "description": "",
-    "version": "1.0.1",
+    "version": "1.0.4",
     "main": "./jump-boot/start.js",
     "license": "MIT",
     "type": "commonjs",
