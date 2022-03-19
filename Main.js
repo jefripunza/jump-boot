@@ -20,12 +20,10 @@ class Main {
     }
 
     chatServer = {
-        cache: true,
-        callback: (websocket) => {
-            websocket(io => {
-                // console.log({ io });
-            })
-        }
+        auth: {
+            username: 'anak_trans',
+            password: 'preman_code',
+        },
     }
 
     mailer = process.env.application === 'production' ?
