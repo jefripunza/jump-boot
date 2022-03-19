@@ -132,7 +132,8 @@ function printError(message) {
  * @param {*} argv ok
  * @param {*} numRequired ok
  */
-function checkCommands(yargs, argv, numRequired) {
+async function checkCommands(yargs, argv, numRequired) {
+    console.log({ a: await argv, numRequired });
     if (argv._.length < numRequired) {
         if (!showHelp) {
             yargs.showHelp();
@@ -185,7 +186,7 @@ console.log(
 const daftar = {
     // command -> item
     create: ['middleware', 'controller', 'service', 'repo', 'entity', 'pack'],
-    git: ['init', 'commit', 'push'],
+    git: ['force', 'commit', 'push'],
 };
 
 let yargs = require('yargs');
