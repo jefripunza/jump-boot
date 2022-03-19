@@ -1,12 +1,12 @@
 /**
- * title_example
- * Description :
- * Author      :
+ * example_title
+ * Description : 
+ * Author      : 
  */
 
 const Service = require('../jump-boot/Service');
 
-class _Example_ extends Service {
+class ExampleClass extends Service {
 
     /**
    * @param {*} props send data from before
@@ -16,11 +16,8 @@ class _Example_ extends Service {
         this.setupProps(props);
     }
 
-    /**
-   * @Autowired
-   */
-
     // lets code ...
+
 }
 
-module.exports = _Example_;
+module.exports = ExampleClass;

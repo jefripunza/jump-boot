@@ -1,14 +1,14 @@
 /**
- * title_example
- * Description :
- * Author      :
+ * example_title
+ * Description : 
+ * Author      : 
  */
 
 const EntitySchema = require('typeorm').EntitySchema;
 
 module.exports = new EntitySchema({
-    name: '_Example_', // selector
-    tableName: '#example#', // Optional: Provide `tableName` property to override the default behaviour for table name.
+    name: 'ExampleSelector', // selector
+    tableName: 'example_tablename', // Optional: Provide `tableName` property to override the default behaviour for table name.
     columns: {
         id: {
             primary: true,

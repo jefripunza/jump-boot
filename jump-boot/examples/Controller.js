@@ -1,15 +1,15 @@
 /**
- * title_example
- * Description :
- * Author      :
+ * example_title
+ * Description : 
+ * Author      : 
  */
 
 const Controller = require('../jump-boot/Controller');
 
 /**
- * @Path ("/#example#")
+ * @Path ("/example_path")
  */
-class _Example_ extends Controller {
+class ExampleClass extends Controller {
 
     /**
    * @TODO: Happy Hacking with this example ^.^
@@ -22,7 +22,7 @@ class _Example_ extends Controller {
    * @GetMapping ("/")
    * @Middleware ("")
    */
-    getAllExample = async (req, res) => {
+    getAllexample_function = async (req, res) => {
     // eslint-disable-next-line no-empty-pattern
         const {
             // declare if you use params
@@ -56,7 +56,7 @@ class _Example_ extends Controller {
    * @AllowHeader (["authentication"])
    * @ValidateBody ({id: "integer", username: "string", password: "string", test: "object"})
    */
-    insertNewExample = async (req, res) => {
+    insertNewexample_function = async (req, res) => {
     // eslint-disable-next-line no-empty-pattern
         const {
             // declare if you use body ...
@@ -76,7 +76,7 @@ class _Example_ extends Controller {
    * @PutMapping ("/")
    * @AllowBody (["id", "username", "password"])
    */
-    updateExample = async (req, res) => {
+    updateexample_function = async (req, res) => {
     // eslint-disable-next-line no-empty-pattern
         const {
             // declare if you use body ...
@@ -96,7 +96,7 @@ class _Example_ extends Controller {
    * @DeleteMapping ("/")
    * @AllowBody ("id")
    */
-    deleteExample = async (req, res) => {
+    deleteexample_function = async (req, res) => {
     // eslint-disable-next-line no-empty-pattern
         const {
             // declare if you use body ...
@@ -113,4 +113,4 @@ class _Example_ extends Controller {
     };
 }
 
-module.exports = _Example_;
+module.exports = ExampleClass;

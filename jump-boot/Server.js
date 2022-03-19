@@ -67,7 +67,7 @@ class Server {
         cors = false,
         // eslint-disable-next-line no-shadow
         helmet = false,
-        maxUploadSize = 20,
+        maxUploadSize = 100, // default very save
         // eslint-disable-next-line no-shadow
         jwt = false,
         doc = false,
@@ -77,7 +77,7 @@ class Server {
         // webserver init
         this.app = express();
 
-        this.port = properties.server.port || port;
+        this.port = process.env.PORT || properties.server.port || port;
         this.host = host;
 
         // for developing
@@ -310,7 +310,7 @@ class Server {
                             } else if (this.jwt && !JwtGlobal && JwtLocal) {
                                 middleware.push(JwtValidate);
                             }
-                            // =================== Allowed Header =================== //
+                            // =================== Validate Files =================== //
                             if (annotations.AllowHeader) {
                                 middleware.push((req, res, next) => {
                                     let headers_available = [];
@@ -345,10 +345,9 @@ class Server {
                             function validateType(type, value) {
 
                                 /**
-                 *
-                 * @param {array} approve
-                 * @returns
-                 */
+                                 * @param {array} approve
+                                 * @returns
+                                 */
                                 function approved(approve) {
                                     return (
                                         String(type)
@@ -418,6 +417,107 @@ class Server {
                                 }
                                 return false; // tolak
                             }
+                            // =================== Validate Files =================== //
+                            if (annotations.ValidateFiles) {
+                                if (isObject(annotations.ValidateFiles)) {
+                                    if (
+                                        // eslint-disable-next-line id-length
+                                        ['PostMapping', 'PutMapping', 'DeleteMapping'].some((v) => {
+                                            return annotations[v];
+                                        })
+                                    ) {
+                                        const require_files = Object.keys(annotations.ValidateFiles);
+                                        // eslint-disable-next-line consistent-return
+                                        middleware.push((req, res, next) => {
+                                            const now_files = Object.keys(req.files)
+                                            // validate key files
+                                            if (!require_files.some(v => now_files.includes(v))) return negativeResponse(`files '${require_files.join(' / ')}' is required!`)
+                                            // validate specification per file
+                                            for (let i = 0; i < now_files.length; i++) {
+                                                const key_files = now_files[i];
+                                                //
+                                                const role = annotations.ValidateFiles[key_files]
+                                                const file = req.files[key_files]
+                                                // validate init
+                                                if (role.size || role.maxSize) {
+                                                    const require_size = role.size || role.maxSize
+                                                    if (require_size > this.maxUploadSize) return res.status(StatusCode.CLIENT.BAD_REQUEST).json({
+                                                        message: 'maxUploadSize in Main.js is bigger than require_size!',
+                                                    })
+                                                }
+                                                // fix data
+                                                file.size = parseFloat((file.size / 1024 / 1024).toFixed(2))
+                                                file.ext = String(path.extname(file.name)).replace(/\./g, '')
+                                                // for information
+                                                const file_info = { ...file }
+                                                delete file_info.data
+                                                delete file_info.mv
+                                                delete file_info.md5
+                                                delete file_info.truncated
+                                                delete file_info.tempFilePath
+                                                delete file_info.encoding
+                                                file_info.size = `${file_info.size}MB`
+                                                // eslint-disable-next-line require-jsdoc
+                                                function negativeResponse(message) {
+                                                    res.status(StatusCode.CLIENT.BAD_REQUEST).json({
+                                                        file_info,
+                                                        message,
+                                                    })
+                                                }
+                                                // validate ext / extension
+                                                if (role.ext || role.extension) {
+                                                    const require_ext = role.ext || role.extension
+                                                    if (isArray(require_ext)) {
+                                                        if (!require_ext.includes(file.ext)) {
+                                                            negativeResponse('extension is not require!')
+                                                            break;
+                                                        }
+                                                    } else if (isString(require_ext)) {
+                                                        if (String(require_ext).includes('|')) {
+                                                            const array_require_ext = String(require_ext).split('|')
+                                                            if (!array_require_ext.includes(file.ext)) {
+                                                                negativeResponse('extension is not require!')
+                                                                break;
+                                                            }
+                                                        } else if (require_ext !== file.ext) {
+                                                            negativeResponse('extension is not require!')
+                                                            break;
+                                                        }
+                                                    } else {
+                                                        negativeResponse('extension only string or array!')
+                                                        break;
+                                                    }
+                                                }
+                                                // validate size
+                                                if (role.size || role.maxSize) {
+                                                    const require_size = role.size || role.maxSize
+                                                    if (typeof require_size === 'number') {
+                                                        if (file.size > require_size) {
+                                                            negativeResponse(`file size is bigger than request! (need under ${require_size}MB)`)
+                                                            break;
+                                                        }
+                                                    } else {
+                                                        negativeResponse('maxSize only number!')
+                                                        break;
+                                                    }
+                                                }
+                                            } // end for
+                                            return next()
+                                        })
+                                    } else {
+                                        console.log(
+                                            // eslint-disable-next-line max-len
+                                            `\n\n[ERROR]\nGET method is not support ValidateFiles, \n\tproof file  : ${_pathFile}\n\ton function : ${function_name}\n\tremove this : @ValidateFiles (`,
+                                            annotations.ValidateFiles,
+                                            ')\n\n\n'
+                                        );
+                                        throw new Error('read error please...');
+                                    }
+                                } else {
+                                    throw new Error('@ValidateFiles is not object...');
+                                }
+                            }
+                            // =================== Validate Body =================== //
                             if (annotations.ValidateBody) {
                                 if (isObject(annotations.ValidateBody)) {
                                     if (

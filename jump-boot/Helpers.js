@@ -3,6 +3,8 @@
  * Description : membuat fungsi2 pembantu
  */
 
+const fs = require('fs');
+
 const { HeadersMetaDefaultConstant } = require('./Enum');
 
 const { exec } = require('child_process');
@@ -740,6 +742,19 @@ function array2csv(array, separator = ';') {
     return csvOut
 }
 
+function fixZeroDate(value) {
+    return value < 10 ? '0' + value : value
+}
+function fixZeroMillisecond(value) {
+    return String(value).length === 3 ? value : '0' + value
+}
+
+function mkdirIfNotExist(directory_path) {
+    if (!fs.existsSync(directory_path)) {
+        fs.mkdir(directory_path)
+    }
+}
+
 module.exports = {
     // ============== Special Function ============== //
     // Specific Function for Jump Boot
@@ -805,4 +820,9 @@ module.exports = {
 
     json2array,
     array2csv,
+
+    fixZeroDate,
+    fixZeroMillisecond,
+
+    mkdirIfNotExist,
 };

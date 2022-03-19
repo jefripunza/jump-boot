@@ -1,13 +1,15 @@
 /**
- * title_example
+ * example_title
  * Description :
  * Author      :
  */
 
 const Models = require('../../jump-boot/Models');
 
-class _Example_ extends Models {
+class ExampleClass extends Models {
+
     // lets code ...
+
 }
 
-module.exports = _Example_;
+module.exports = ExampleClass;

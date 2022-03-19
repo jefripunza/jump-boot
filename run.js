@@ -19,30 +19,28 @@ const { capitalizeFirstLetter, splitCamelCase } = require('./jump-boot');
  * @param {string} source path of sources
  * @param {string} target path of target
  */
-function copyFile(source, target) {
+function copyFile(source, target, to) {
     let class_name = path.basename(target);
     class_name = String(class_name).includes('.') ?
         String(class_name).split('.')[0] :
         class_name;
-    let type_file = String(target).split('\\')[3]
-    type_file = String(type_file).toLowerCase().endsWith('s') ? String(type_file)
-        // eslint-disable-next-line arrow-body-style
-        .split('').reverse().filter((_, i) => i !== 0).reverse()
-        // eslint-disable-next-line arrow-body-style
-        .map((v, i) => i === 0 ? String(v).toUpperCase() : v).join('') : type_file
-    class_name = String(class_name).toLowerCase().endsWith('controller') ? class_name : `${class_name}${type_file}`
-    const file = String(fs.readFileSync(source, { encoding: 'utf-8' }))
-        .replace(/title_example/gi, splitCamelCase(class_name))
-        .replace(/_Example_/gi, class_name)
-        .replace(
-            /#example#/gi,
-            splitCamelCase(class_name)
-                .toLowerCase().split(' ').join('_')
-                // eslint-disable-next-line arrow-body-style
-                .split('_').filter(v => v !== 'controller').join('_')
-        );
     // eslint-disable-next-line arrow-body-style
-    const fix_target = `${String(target).split('\\').reverse().map((v, i) => i === 0 ? class_name : v).reverse().join('\\')}.js`
+    const with_embel2 = to === 'middleware' ? 'Middleware' :
+        to === 'controller' ? 'Controller' :
+            to === 'service' ? 'Service' :
+                to === 'repository' ? 'Repository' :
+                    to === 'entities' ? 'Entity' : null
+    class_name = String(class_name).toLowerCase().endsWith('controller') ? String(class_name).replace(/Controller/g, '').replace(/controller/g, '') : class_name
+    const file = String(fs.readFileSync(source, { encoding: 'utf-8' }))
+        .replace(/example_title/gi, splitCamelCase(class_name + with_embel2)) // title name dengan embel2
+        .replace(/ExampleClass/gi, class_name + with_embel2) // untuk nama class dengan embel2
+        .replace(/example_path/gi, splitCamelCase(class_name).toLowerCase().split(' ').join('_')) // untuk path endpoint
+        .replace(/example_function/gi, splitCamelCase(class_name).split(' ').join('')) // untuk semua fungsional
+
+        .replace(/ExampleSelector/gi, class_name + with_embel2) // untuk nama selector entity
+        .replace(/example_tablename/gi, splitCamelCase(class_name).toLowerCase().split(' ').join('_')) // untuk nama tabel
+    // eslint-disable-next-line arrow-body-style
+    const fix_target = `${String(target).split('\\').reverse().map((v, i) => i === 0 ? class_name + with_embel2 : v).reverse().join('\\')}.js`
     fs.writeFileSync(fix_target, file, { encoding: 'utf-8' });
 }
 
@@ -211,20 +209,14 @@ var argv = yargs
                                 return capitalizeFirstLetter(v);
                             })
                             .join('')
-                    )
+                    ),
+                    to
                 );
             } else {
                 copyFile(
                     source_path[to],
-                    target_path[to](
-                        String('Example')
-                            .split(' ')
-                            // eslint-disable-next-line id-length
-                            .map((v) => {
-                                return capitalizeFirstLetter(v);
-                            })
-                            .join('')
-                    )
+                    target_path[to]('Example'),
+                    to,
                 );
             }
         }

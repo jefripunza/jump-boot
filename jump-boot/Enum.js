@@ -27,14 +27,14 @@ const MethodAvailable = [
 
 const StatusCode = {
     INFO: {
-    // 1xx Information Responses
+        // 1xx Information Responses
         CONTINUE: 100,
         SWITCHING_PROTOCOLS: 101,
         PROCESSING: 102,
         EARLY_HINTS: 103,
     },
     SUCCESS: {
-    // 2xx Successful Responses
+        // 2xx Successful Responses
         OK: 200,
         CREATED: 201,
         ACCEPTED: 202,
@@ -48,7 +48,7 @@ const StatusCode = {
         IM_USED: 226,
     },
     REDIRECT: {
-    // 3xx Redirection Messages
+        // 3xx Redirection Messages
         MULTIPLE_CHOICES: 300,
         MOVED_PERMANENTLY: 301,
         FOUND: 302,
@@ -60,7 +60,7 @@ const StatusCode = {
         PERMANENT_REDIRECT: 308,
     },
     CLIENT: {
-    // 4xx Client Error Responses
+        // 4xx Client Error Responses
         BAD_REQUEST: 400,
         UNAUTHORIZED: 401,
         PAYMENT_REQUIRED: 402,
@@ -107,7 +107,7 @@ const StatusCode = {
         CLIENT_CLOSED_REQUEST: 499, // NGINX
     },
     SERVER: {
-    // 5xx Server Error responses
+        // 5xx Server Error responses
         INTERNAL_SERVER_ERROR: 500,
         NOT_IMPLEMENTED: 501,
         BAD_GATEWAY: 502,
@@ -145,6 +145,16 @@ const HeadersMetaDefaultConstant = {
     HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS: 'access-control-allow-credentials',
 };
 
+const SocketEvents = {
+    CONNECTION: 'connection',
+    DISCONNECT: 'disconnect',
+    INIT: 'init',
+    USER_ACTION: 'user_action',
+    REQUEST_MESSAGE: 'request_message',
+    TYPING: 'typing',
+    MESSAGE: 'message',
+};
+
 // ========================================================== //
 
 module.exports = {
@@ -152,4 +162,5 @@ module.exports = {
     MethodAvailable,
     StatusCode,
     HeadersMetaDefaultConstant,
+    SocketEvents,
 };

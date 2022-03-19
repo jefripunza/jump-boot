@@ -39,6 +39,7 @@ let properties_env = fs.existsSync(path.join(root, 'application.properties')) ?
     'spring.profiles.active'
     ] :
     default_env; // default if "application.properties" not found
+properties_env = process.env.PROPERTIES_ENV || properties_env // standarisasi IST
 process.env.application = properties_env; // setup env
 const properties_available = fs
     .readdirSync(path.join(root))

@@ -77,6 +77,34 @@ class Models {
     /**
    *
    * @param {*} entity
+   * @param {[]|{}} data
+   */
+    async inputFromGetId(entity, data) {
+        const new_data = [];
+        if (isArray(data)) {
+            new_data.push(...data);
+        } else if (isObject(data)) {
+            new_data.push(data);
+        } else {
+            throw new Error('please use Array Or Object to insert data!!!');
+        }
+        try {
+            const result = await this.typeorm
+                .getConnection()
+                .createQueryBuilder()
+                .insert()
+                .into(entity)
+                .values(new_data)
+                .execute();
+            return result.identifiers[0].id
+        } catch (error) {
+            return false
+        }
+    }
+
+    /**
+   *
+   * @param {*} entity
    * @param {{}} where
    * @returns
    */
@@ -86,6 +114,18 @@ class Models {
             .createQueryBuilder()
             .where(this.#createWhereSelector(where), where)
             .getMany();
+    }
+
+    /**
+   * @param {*} entity
+   * @param {number|string} id
+   * @param {[]} relations
+   * @returns
+   */
+    async selectFromIdRelation(entity, id, relations) {
+        return await this.typeorm
+            .getRepository(entity)
+            .findOne({ id, relations });
     }
 
     /**

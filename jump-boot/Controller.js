@@ -84,6 +84,7 @@ class Controller extends Service {
     sendSuccessJson(res, data, message = false) {
         const insert_message = message ? { message } : {};
         return res.status(StatusCode.SUCCESS.OK).json({
+            status: 'success',
             ...insert_message,
             ...data,
         });
@@ -107,6 +108,7 @@ class Controller extends Service {
    */
     sendClientErrorJson(res, message) {
         return res.status(StatusCode.CLIENT.BAD_REQUEST).json({
+            status: 'error client',
             message: message || 'bad request',
         });
     }
@@ -129,6 +131,7 @@ class Controller extends Service {
    */
     sendServerErrorJson(res, message) {
         return res.status(StatusCode.SERVER.INTERNAL_SERVER_ERROR).json({
+            status: 'error server',
             message: message || 'internal server error',
         });
     }

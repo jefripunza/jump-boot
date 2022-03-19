@@ -59,11 +59,28 @@ module.exports = new Promise(async (resolve, reject) => {
         // =================== Web Socket =================== //
         if (JumpBoot.chatServer && isObject(JumpBoot.chatServer) && webserver) {
             const chatServer = new ChatServer(webserver.httpServer, JumpBoot.chatServer);
-            const io = await chatServer.run();
-            if (JumpBoot.chatServer.callback) {
-                JumpBoot.chatServer.callback((websocket) => { // callback
-                    websocket(io)
-                })
+            const { io, option } = await chatServer.run();
+            if (option.auth && Object.keys(option.auth).length > 0) {
+                const { auth } = option
+                // eslint-disable-next-line consistent-return
+                io.use((socket, next) => {
+                    const isAuth = Object.keys(auth).map(key => {
+                        return socket.handshake.auth[key] === undefined ? undefined : auth[key] === socket.handshake.auth[key]
+                    })
+                    if (isAuth.includes(undefined)) {
+                        const error = new Error('BAD_REQUEST');
+                        error.data = 'your auth parameter not complete...'
+                        return next(error);
+                    } else if (isAuth.includes(false)) {
+                        const error = new Error('UNAUTHORIZED');
+                        error.data = 'invalid authentication'
+                        return next(error);
+                    }
+                    return next();
+                });
+            }
+            if (JumpBoot.chatServer.socket && typeof JumpBoot.chatServer.socket === 'function') {
+                JumpBoot.chatServer.socket(io)
             }
         }
 
