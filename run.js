@@ -134,7 +134,7 @@ function printError(message) {
  */
 async function checkCommands(yargs, argv, numRequired) {
     console.log({ a: await argv, numRequired });
-    if (argv._.length < numRequired) {
+    if (await argv._.length < numRequired) {
         if (!showHelp) {
             yargs.showHelp();
             showHelp = true;
