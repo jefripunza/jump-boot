@@ -507,6 +507,8 @@ class Controller {
 }
 ```
 
+NOTE : satuan maxSize adalah Mega Byte (MB)
+
 
 
 
