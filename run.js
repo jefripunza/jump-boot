@@ -184,7 +184,7 @@ console.log(
 
 const daftar = {
     // command -> item
-    create: ['controller', 'middleware', 'service', 'entity', 'repo'],
+    create: ['middleware', 'controller', 'service', 'repo', 'entity', 'pack'],
     git: ['init', 'commit', 'push'],
 };
 
@@ -223,20 +223,20 @@ var argv = yargs
         const list = daftar.create;
         argv = yargs
             .usage('usage: $0 create <item> [options]')
-            .command('controller', 'create a new controller', () => {
+            .command('middleware', 'create a new middleware', () => {
                 try {
-                    sendFile('controller');
-                    console.log('creating controller :)');
+                    sendFile('middleware');
+                    console.log('creating middleware :)');
                 } catch (error) {
                     console.log(error.message);
                 } finally {
                     exit();
                 }
             })
-            .command('middleware', 'create a new middleware', () => {
+            .command('controller', 'create a new controller', () => {
                 try {
-                    sendFile('middleware');
-                    console.log('creating middleware :)');
+                    sendFile('controller');
+                    console.log('creating controller :)');
                 } catch (error) {
                     console.log(error.message);
                 } finally {
@@ -253,6 +253,16 @@ var argv = yargs
                     exit();
                 }
             })
+            .command('repo', 'create a new repository', () => {
+                try {
+                    sendFile('repository');
+                    console.log('creating repository :)');
+                } catch (error) {
+                    console.log(error.message);
+                } finally {
+                    exit();
+                }
+            })
             .command('entity', 'create a new entities', () => {
                 try {
                     sendFile('entities');
@@ -263,14 +273,35 @@ var argv = yargs
                     exit();
                 }
             })
-            .command('repo', 'create a new repository', () => {
+            .command('pack', 'create a all new file integrated', () => {
                 try {
-                    sendFile('repository');
-                    console.log('creating repository :)');
+                    showHelp = true // skip help
+                    Promise.resolve()
+                        .then(() => {
+                            sendFile('middleware');
+                            console.log('creating middleware :)');
+                        })
+                        .then(() => {
+                            sendFile('controller');
+                            console.log('creating controller :)');
+                        })
+                        .then(() => {
+                            sendFile('service');
+                            console.log('creating service :)');
+                        })
+                        .then(() => {
+                            sendFile('repository');
+                            console.log('creating repository :)');
+                        })
+                        .then(() => {
+                            sendFile('entities');
+                            console.log('creating entities :)');
+                        })
+                        .then(() => {
+                            exit();
+                        })
                 } catch (error) {
                     console.log(error.message);
-                } finally {
-                    exit();
                 }
             })
             .option('n', {
