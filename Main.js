@@ -19,45 +19,45 @@ class Main {
         jwt: true,
     }
 
-    chatServer = {
-        auth: {
-            username: 'username',
-            password: 'password',
-        },
-    }
+    // chatServer = {
+    //     auth: {
+    //         username: 'username',
+    //         password: 'password',
+    //     },
+    // }
 
-    mailer = process.env.application === 'production' ?
-        {
-            host: 'smtp.ethereal.email',
-            port: 587,
-            secure: false, // true for 465, false for other ports
-            auth: {
-                user: process.env.MAILER_EMAIL_PRODUCTION,
-                pass: process.env.MAILER_PASS_PRODUCTION,
-            },
-        } :
-        process.env.application === 'dev' ?
-            {
-                host: 'smtp.ethereal.email',
-                port: 587,
-                secure: false, // true for 465, false for other ports
-                auth: {
-                    user: process.env.MAILER_EMAIL_DEV,
-                    pass: process.env.MAILER_PASS_DEV,
-                },
-            } :
-            {
-                // local (default)
-                service: 'gmail',
-                auth: {
-                    user: process.env.MAILER_EMAIL_LOCAL,
-                    pass: process.env.MAILER_PASS_LOCAL,
-                },
-            };
+    // mailer = process.env.application === 'production' ?
+    //     {
+    //         host: 'smtp.ethereal.email',
+    //         port: 587,
+    //         secure: false, // true for 465, false for other ports
+    //         auth: {
+    //             user: process.env.MAILER_EMAIL_PRODUCTION,
+    //             pass: process.env.MAILER_PASS_PRODUCTION,
+    //         },
+    //     } :
+    //     process.env.application === 'dev' ?
+    //         {
+    //             host: 'smtp.ethereal.email',
+    //             port: 587,
+    //             secure: false, // true for 465, false for other ports
+    //             auth: {
+    //                 user: process.env.MAILER_EMAIL_DEV,
+    //                 pass: process.env.MAILER_PASS_DEV,
+    //             },
+    //         } :
+    //         {
+    //             // local (default)
+    //             service: 'gmail',
+    //             auth: {
+    //                 user: process.env.MAILER_EMAIL_LOCAL,
+    //                 pass: process.env.MAILER_PASS_LOCAL,
+    //             },
+    //         };
 
-    whatsapp = {
-        name: 'My Project Name',
-    }
+    // whatsapp = {
+    //     name: 'My Project Name',
+    // }
 }
 
 module.exports = Main;
