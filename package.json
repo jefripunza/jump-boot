@@ -1,7 +1,7 @@
 {
     "name": "jump-boot",
     "description": "",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "main": "./jump-boot/start.js",
     "license": "MIT",
     "type": "commonjs",
@@ -10,7 +10,9 @@
     },
     "scripts": {
         "start": "node .",
-        "dev": "npx nodemon",
+        "dev": "PORT=8080 PROPERTIES_ENV=dev node ./jump-boot/start.js",
+        "uat": "PORT=8080 PROPERTIES_ENV=uat node ./jump-boot/start.js",
+        "prod": "PORT=8080 PROPERTIES_ENV=production node ./jump-boot/start.js",
         "format": "npm run format:prettier && npx eslint \"**/*.js\" --ignore-path ./.prettierignore --fix",
         "format:prettier": "prettier \"**/*.js\" --ignore-path ./.prettierignore --write",
         "pm2:add": "npx pm2 start ./jump-boot/start.js --name service_name",
