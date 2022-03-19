@@ -184,10 +184,7 @@ node run create controller   // auto generate dengan nama "ExampleController.js"
 node run create controller --name contohSaja   // untuk custom nama file beserta endpoint dan nama class nya
 ```
 
-maka akan muncul seperti ini (example) :
-![banner](jump-boot/img/CLI-RESULT.JPG)
-
-akan terbuat otomatis file seperti ini (example) :
+maka akan terbuat otomatis file seperti ini (example) :
 ![banner](jump-boot/img/CLI-FILE-VIEW.JPG)
 
 dan hasilnya akan seperti ini (example) :
@@ -274,6 +271,20 @@ class Main {
         cors: true,
         helmet: true,
         jwt: true,
+    }
+
+}
+```
+
+### setup Websocket (Main.js)
+```javascript
+class Main {
+
+    chatServer = {
+        auth: {
+            username: 'username',
+            password: 'password',
+        },
     }
 
 }
@@ -470,7 +481,31 @@ maka akan muncul seperti ini di endpoint "http://localhost:#port/#root/doc" (exa
 ![banner](jump-boot/img/DOC-4.JPG)
 
 
+### setup validation
+jika anda ingin menggunakan validasi terhadap body atau file upload bisa menggunakan anotasi seperti berikut :
 
+```javascript
+class Controller {
+
+  /**
+   * @PostMapping ("/")
+   * // for validation
+   * @ValidateBody ({ name: "string" })
+   * @ValidateFiles ({ img_profile: { extension: ['jpg', 'jpeg', 'png'], maxSize: 5 } })
+   */
+    isYourFunctionValidate = async (req, res) => {
+        // lolos validasi
+        const {
+            name,
+        } = req.body;
+        const {
+            img_profile,
+        } = req.files
+        ...
+    }
+
+}
+```
 
 
 

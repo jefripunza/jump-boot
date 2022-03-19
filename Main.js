@@ -21,8 +21,8 @@ class Main {
 
     chatServer = {
         auth: {
-            username: 'anak_trans',
-            password: 'preman_code',
+            username: 'username',
+            password: 'password',
         },
     }
 
